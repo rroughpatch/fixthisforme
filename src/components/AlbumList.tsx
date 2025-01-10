@@ -1,32 +1,30 @@
 "use client";
-import { useState } from "react";
+
 import AlbumGrid from "@/components/AlbumGrid";
 import AlbumRowList from "@/components/AlbumRowList";
+import { Grid3x3, Rows3 } from "lucide-react";
+import { Button } from "@/components/Button";
 
-export default function AlbumList() {
-  const [isGrid, setIsGrid] = useState(false);
-  // default to true but using false for testing purposes
+import { useAtom } from "jotai";
+import { isGridAtom } from "@/atoms/view";
 
-  function onGridToggle() {
-    setIsGrid(!isGrid);
+export function AlbumListToggle() {
+  const [isGrid, setIsGrid] = useAtom(isGridAtom);
+
+  function handleGridToggle() {
+    setIsGrid((prev) => !prev);
   }
 
   return (
     <div className={"flex flex-col items-center justify-center"}>
-      <button
-        className="absolute right-0 top-0 m-12 size-10 rounded-full border-4 border-accent-3 bg-accent-2"
+      <Button
+        className="absolute right-10 top-10 z-50 flex size-10 items-center justify-center rounded border border-accent-3 bg-accent-2"
         type={"button"}
-        onClick={onGridToggle}
-      />
-      {isGrid ? (
-        <div className="m-16 w-[42vw] items-center justify-center overflow-scroll">
-          <AlbumGrid />
-        </div>
-      ) : (
-        <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
-          <AlbumRowList />
-        </div>
-      )}
+        onClick={() => handleGridToggle()}
+      >
+        {isGrid ? <Rows3 className="size-5" /> : <Grid3x3 className="size-5" />}
+      </Button>
+      {isGrid ? <AlbumGrid /> : <AlbumRowList />}
     </div>
   );
 }

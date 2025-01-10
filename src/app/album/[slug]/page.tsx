@@ -1,6 +1,6 @@
 import { albumsData } from "@/components/AlbumData";
 import { notFound } from "next/navigation";
-import BackButton from "@/app/BackButton";
+import { BackButton } from "./_components/BackButton";
 import AlbumImage from "@/components/ui/AlbumImage";
 import Image from "next/image";
 
@@ -21,7 +21,6 @@ export default async function Page({
   const slug = (await params).slug;
   const album = getAlbum(slug);
 
-  // check if any album was returned
   if (!album) {
     return notFound();
   }
